@@ -38,11 +38,12 @@ Provide **either** a single region **or** one-or-more `--region`, not both.
 
 | flag | type | required | default | description |
 | --- | --- | --- | --- | --- |
-| `--het-only` | switch | no | both | Heterozygous carriage only. |
-| `--hom-only` | switch | no | both | Homozygous carriage only. |
+| `--het-only` | switch | no | both | Include HETEROZYGOUS variants ONLY (0/1 genotypes). |
+| `--hom-only` | switch | no | both | Include HOMOZYGOUS variants ONLY (1/1 genotypes). |
 
-With no zygosity flag, both heterozygous and homozygous carriage are queried.
-`--het-only` and `--hom-only` are mutually exclusive.
+With no zygosity flag, both HETEROZYGOUS (0/1) and HOMOZYGOUS (1/1) carriage are
+queried — use the default when you need homozygous OR heterozygous variants, or
+when uncertain. `--het-only` and `--hom-only` are mutually exclusive.
 
 ### Annotation filters (count/select variants and samples)
 
@@ -91,16 +92,19 @@ cohort-wide. JSON: `{command, count, request, result_incomplete}`.
 
 ### `select-variants`
 
+SELECT variants which exist in ANY genomic region provided.
+
 Region + zygosity + annotation flags, plus pagination:
 
 | flag | type | required | default | description |
 | --- | --- | --- | --- | --- |
-| `--limit` | int | no | 1000 | Hard cap on returned variants (mutually exclusive with `--page-size`). |
+| `--limit` | int | no | 200 | Hard cap on returned variants (mutually exclusive with `--page-size`). |
 | `--page-size` | int | no | – | Retrieve ALL matching variants in pages of this size (full walk). |
 
 JSON: `{command, count_returned, truncated, request, result_incomplete,
 variants:[…]}`. `truncated` is true when the count hit `--limit` (more may
-exist; raise `--limit` or use `--page-size`).
+exist; raise `--limit` or use `--page-size`). Empty `variants` array if no
+matches.
 
 ### `count-variants-in-samples`
 
@@ -128,7 +132,8 @@ Region + zygosity + annotation flags, plus pagination:
 
 Returns the **names** of individuals carrying a matching variant. To see which
 variants qualified them, feed the names into `select-variants-in-samples`. JSON:
-`{command, count, samples:[…], request, result_incomplete}`.
+`{command, count, samples:[…], request, result_incomplete}`. Empty `samples` array
+if no matches.
 
 ### `count-samples-hom-ref`
 
