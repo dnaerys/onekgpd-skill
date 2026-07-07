@@ -86,7 +86,7 @@ def test_select_variants_schema(cli, live_server):
     assert r.json["count_returned"] == len(variants)
     assert len(variants) <= 5
     for v in variants:
-        assert set(v.keys()) == VARIANT_KEYS          # exactly the 19 in-scope keys
+        assert set(v.keys()) == VARIANT_KEYS          # exactly the 22 in-scope keys
         assert "cadd_raw" not in v and "cadd_phred" not in v
         assert WIN_START <= v["start"] <= WIN_END
         assert 0.0 <= v["af"] <= 1.0

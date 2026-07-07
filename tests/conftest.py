@@ -51,7 +51,9 @@ EXPECTED_SAMPLES_TOTAL = 3202
 # Exact key set of a serialized variant (no cadd_*; gnomAD keys plural).
 VARIANT_KEYS = {
     "chr", "start", "end", "ref", "alt", "af", "ac", "an",
-    "homc", "hetc", "misc", "homfc", "hetfc", "misfc",
+    "hom_samples", "het_samples", "mis_samples",
+    "hom_samples_fx", "het_samples_fx", "mis_samples_fx",
+    "hom_samples_mxy", "het_samples_mxy", "mis_samples_mxy",
     "gnomad_exomes_af", "gnomad_genomes_af", "am_score", "amino_acids", "biallelic",
 }
 
